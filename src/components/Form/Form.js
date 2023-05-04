@@ -1,14 +1,17 @@
 import { useState } from "react";
 import Button from "../Button/Button";
-import CampText from "../CampText/CampText";
+import Camp from "../Camp/Camp";
 import ListOptions from "../ListOptions/ListOptions";
 import "./Form.css";
 
-const Form = ({ Equipos, registerCollaborator }) => {
+const Form = ({ Equipos, registerCollaborator, createTeam }) => {
   const [name, setName] = useState("");
   const [position, setPosition] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [team, setTeam] = useState("");
+
+  const [title, setTitle] = useState("");
+  const [color, setColor] = useState("");
 
   const sendForm = (e) => {
     e.preventDefault();
@@ -21,25 +24,30 @@ const Form = ({ Equipos, registerCollaborator }) => {
     registerCollaborator(dataSend);
   };
 
+  const sendFormTeam = (e) => {
+    e.preventDefault();
+    createTeam({ title, primaryColor: color });
+  };
+
   return (
     <section className="formulario">
       <form onSubmit={sendForm}>
         <h2> Rellena el formulario para crear el colaborador. </h2>{" "}
-        <CampText
+        <Camp
           title="Nombre"
           placeholder="ingresa Nombre"
           required
           value={name}
           setValue={setName}
         />{" "}
-        <CampText
+        <Camp
           title="Puesto"
           placeholder="ingresa Puesto"
           required
           value={position}
           setValue={setPosition}
         />{" "}
-        <CampText
+        <Camp
           title="Foto"
           placeholder="ingresa enlace de foto"
           required
@@ -48,7 +56,26 @@ const Form = ({ Equipos, registerCollaborator }) => {
         />{" "}
         <ListOptions value={team} setValue={setTeam} Equipos={Equipos} />{" "}
         <Button> Crear </Button>{" "}
-      </form>{" "}
+      </form>
+      <form onSubmit={sendFormTeam}>
+        <h2> Rellena el formulario para crear el Equipo. </h2>{" "}
+        <Camp
+          title="Titulo"
+          placeholder="ingresar Titulo"
+          required
+          value={title}
+          setValue={setTitle}
+        />{" "}
+        <Camp
+          title="Color"
+          placeholder="ingresa el Color en Hex"
+          required
+          value={color}
+          setValue={setColor}
+          type="color"
+        />
+        <Button>registrar equipo</Button>
+      </form>
     </section>
   );
 };

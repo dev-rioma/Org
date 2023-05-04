@@ -1,16 +1,23 @@
 import "./CampText.css";
 
-const CampText = ({ title, placeholder, required, value, setValue }) => {
+const Camp = ({
+  title,
+  placeholder,
+  required,
+  value,
+  setValue,
+  type = "text",
+}) => {
   const manageChange = (e) => {
     setValue(e.target.value);
   };
 
   return (
-    <div className="campo-texto">
+    <div className={`campo campo-${type}`}>
       <label> {title} </label>{" "}
       <input
         placeholder={placeholder}
-        type="text"
+        type={type}
         required={required}
         value={value}
         onChange={manageChange}
@@ -19,4 +26,4 @@ const CampText = ({ title, placeholder, required, value, setValue }) => {
   );
 };
 
-export default CampText;
+export default Camp;
